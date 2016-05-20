@@ -224,20 +224,6 @@ puts "jOHN​sMITH.".swapcase
 # 8 ---------------------------------------------------------------
 puts 'question 8'
 
-# def binary_search(array, value, from = 0, to = nil)
-#   to = array.count - 1 if to.nil?
-
-#   mid = (from + to) / 2
-
-#   if value < array[mid]
-#     binary_search array, value, from, mid - 1
-#   elsif value > array[mid]
-#     binary_search array, value, mid + 1, to
-#   else
-#     mid
-#   end
-# end
-
 def binary_search(array, value, from=0, to=nil)
   to = array.count - 1 if to.nil?
   mid = (from + to) / 2

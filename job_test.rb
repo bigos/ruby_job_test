@@ -202,3 +202,57 @@ numbers.each { |n| puts "#{n}  #{round_odd_even n}" }
 
 # 7 ---------------------------------------------------------------
 puts 'question 7'
+
+puts "jOHN​sMITH.".swapcase
+
+# 8 ---------------------------------------------------------------
+puts 'question 8'
+
+# def binary_search(array, value, from = 0, to = nil)
+#   to = array.count - 1 if to.nil?
+
+#   mid = (from + to) / 2
+
+#   if value < array[mid]
+#     binary_search array, value, from, mid - 1
+#   elsif value > array[mid]
+#     binary_search array, value, mid + 1, to
+#   else
+#     mid
+#   end
+# end
+
+def binary_search(array, value, from=0, to=nil)
+  to = array.count - 1 if to.nil?
+  mid = (from + to) / 2
+  # puts "value #{value} from #{from}   to #{to}"
+  if value < array[mid]
+    binary_search array, value, from, mid - 1
+  elsif value > array[mid] && from - to > 1
+    binary_search array, value, mid + 1, to
+  else
+    mid
+  end
+end
+
+sorted = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+removed = sorted.reject { |x| x >= 8 && x <= 11 }
+
+p sorted
+p removed
+
+p binary_search(removed, 0)
+p binary_search(removed, 1)
+p binary_search(removed, 8)
+p removed[8]
+
+# 9 ---------------------------------------------------------------
+puts 'question 9'
+
+def remove_repeated(array)
+  counts = Hash.new(0)
+  array.each { |val| counts[val] += 1 }
+  counts.reject { |_, count| count == 1 }.keys
+end
+
+p remove_repeated [1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4]

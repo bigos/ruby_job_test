@@ -109,18 +109,34 @@ p report.to_json
 # 3 ---------------------------------------------------------------
 puts 'question 3'
 
+def get_time(hrs, mins, ampm)
+  h = ampm == 'pm' ? 12 : 0
+  h += hrs
+  mins + (h * 60)
+end
+
+def get_duration(fhrs, fmins, fap, thrs, tmins, tap)
+  from_time = get_time(fhrs, fmins, fap)
+  to_time = get_time(thrs, tmins, tap)
+  if to_time < from_time
+    # add 1440 - number of minutes in 24 hours
+    to_time - from_time + 1440
+  else
+    to_time - from_time
+  end
+end
+
 def get_minutes_between(from_time, to_time)
   time_regex = /(\:|am|pm)/
   fhrs, fdiv, fmins, fap = from_time.split time_regex
   thrs, tdiv, tmins, tap = to_time.split time_regex
-
-  start =  (((fap == 'pm' ? 12 : 0) + fhrs.to_i) * 60) + fmins.to_i
-  finish = (((tap == 'pm' ? 12 : 0) + thrs.to_i) * 60) + tmins.to_i
-  # p [fhrs, fmins, fap, '   ', thrs, tmins, tap, '  ', start, finish]
-  (finish - start).abs
+  get_duration(fhrs.to_i, fmins.to_i, fap, thrs.to_i, tmins.to_i, tap)
 end
 
 puts get_minutes_between('11:30am', '9:55pm')
+puts get_minutes_between('11:55pm', '1:05am')
+puts get_minutes_between('11:55pm', '1:05pm')
+puts get_minutes_between('11:55pm', '11:50pm')
 
 # 4 ---------------------------------------------------------------
 puts 'question 4'

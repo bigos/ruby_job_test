@@ -124,3 +124,81 @@ puts get_minutes_between('11:30am', '9:55pm')
 
 # 4 ---------------------------------------------------------------
 puts 'question 4'
+
+class Array
+  def heapsort
+    self.dup.heapsort!
+  end
+
+  def heapsort!
+    # in pseudo-code, heapify only called once, so inline it here
+    ((length - 2) / 2).downto(0) {|start| siftdown(start, length - 1)}
+
+    # "end" is a ruby keyword
+    (length - 1).downto(1) do |end_|
+      self[end_], self[0] = self[0], self[end_]
+      siftdown(0, end_ - 1)
+    end
+    self
+  end
+
+  def siftdown(start, end_)
+    root = start
+    loop do
+      child = root * 2 + 1
+      break if child > end_
+      # puts "self === #{root.to_s} "
+      # p self
+      child += 1 if child + 1 <= end_ && self[child].length < self[child + 1].length
+
+      break unless self[root].length < self[child].length
+
+      self[root], self[child] = self[child], self[root]
+      root = child
+    end
+  end
+end
+
+arr2 = ['numbers-in-words', 'one', 'twoo', 'three']
+p arr2.heapsort
+p arr2.heapsort[-3]
+
+# 5 ---------------------------------------------------------------
+puts 'question 5'
+
+# before
+# def height_in_cm(feet, inches)
+#   feet_as_inches = feet * 12
+#   total_inches = inches + feet_as_inches
+#   cm = total_inches * 2.54
+#   return cm
+# end
+
+# after
+def height_in_cm(feet, inches)
+  2.54 * (inches + feet * 12)
+end
+
+puts height_in_cm(6, 1)
+
+# 6 ---------------------------------------------------------------
+puts 'question 6'
+
+def round_odd_even(n)
+  # ends with .5
+  if (n).modulo(1).round(2) == 0.5
+    if n.to_i.odd?
+      n.ceil
+    else
+      n.floor
+    end
+  else
+    n
+  end
+end
+
+numbers = [1.2, 3.5, 4.9, 5.4, 6.5, 7.1]
+numbers.each { |n| puts "#{n}  #{round_odd_even n}" }
+
+# 7 ---------------------------------------------------------------
+puts 'question 7'

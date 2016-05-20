@@ -105,3 +105,22 @@ report = {total_words: total_words,
          }
 
 p report.to_json
+
+# 3 ---------------------------------------------------------------
+puts 'question 3'
+
+def get_minutes_between(from_time, to_time)
+  time_regex = /(\:|am|pm)/
+  fhrs, fdiv, fmins, fap = from_time.split time_regex
+  thrs, tdiv, tmins, tap = to_time.split time_regex
+
+  start =  (((fap == 'pm' ? 12 : 0) + fhrs.to_i) * 60) + fmins.to_i
+  finish = (((tap == 'pm' ? 12 : 0) + thrs.to_i) * 60) + tmins.to_i
+  # p [fhrs, fmins, fap, '   ', thrs, tmins, tap, '  ', start, finish]
+  (finish - start).abs
+end
+
+puts get_minutes_between('11:30am', '9:55pm')
+
+# 4 ---------------------------------------------------------------
+puts 'question 4'

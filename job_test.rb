@@ -219,7 +219,22 @@ numbers.each { |n| puts "#{n}  #{round_odd_even n}" }
 # 7 ---------------------------------------------------------------
 puts 'question 7'
 
+def myswapcase(str, acc = '')
+  first_char = str[0]
+  if first_char.nil?
+    acc
+  else
+    if first_char.upcase == first_char
+      fn = :downcase
+    else
+      fn = :upcase
+    end
+    myswapcase(str[1..-1], acc + first_char.send(fn))
+  end
+end
+
 puts "jOHN​sMITH.".swapcase
+puts myswapcase "jOHN​sMITH."
 
 # 8 ---------------------------------------------------------------
 puts 'question 8'

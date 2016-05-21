@@ -243,7 +243,7 @@ puts myswapcase "jOHN​sMITH."
 # 8 ---------------------------------------------------------------
 puts 'question 8'
 
-def binary_search(array, value, from=0, to=nil)
+def binary_search(array, value, from = 0, to = nil)
   to = array.count - 1 if to.nil?
   mid = (from + to) / 2
   # puts "value #{value} from #{from}   to #{to}"

@@ -18,6 +18,7 @@ def bubble_sort(list)
   end
   list
 end
+
 puts 'Question 1'
 p bubble_sort []
 p bubble_sort [1]
@@ -27,8 +28,6 @@ p td1.reverse == bubble_sort(td1)
 
 # 2 ---------------------------------------------------------------
 puts 'question 2'
-
-require 'json/ext'
 
 # https://en.wikipedia.org/wiki/The_Two_Thousand_Words
 two_thousand_words = <<HEREDOC
@@ -62,34 +61,9 @@ Veliké znepokojení v poslední době pochází z možnosti, že by do našeho 
 HEREDOC
 
 # puts two_thousand_words
-divided_words = two_thousand_words.split(/(\s|,|\.|\?|\!|\(|\{|\[|\]|\}|\))/)
+
 
 # p divided_words
-
-total_sentences = 0
-total_words = 0
-words_4plus = 0
-longest_word = 0
-word_lengths = {}
-(0..(divided_words.length - 1)).each do |i|
-  word = divided_words[i]
-
-  # it's tricky to do it exactly
-  total_sentences += 1 if word == '.' || word == '?' || word == '!'
-
-  next unless word =~ /\w+/
-
-  total_words += 1
-  words_4plus += 1 if word.length > 3
-  longest_word = word.length if word.length > longest_word
-  if word_lengths[word.length]
-    word_lengths[word.length] += 1
-  else
-    word_lengths[word.length] = 1
-  end
-end
-
-# p word_lengths
 
 def word_averages(hash, total_words)
   total = 0
@@ -97,13 +71,43 @@ def word_averages(hash, total_words)
   total / total_words
 end
 
-report = {total_words: total_words,
-          total_sentences: total_sentences,
-          longest_word: longest_word,
-          average_word_length: word_averages(word_lengths, total_words),
-          words_longer_than_three_chars: words_4plus
-         }
+def buidl_report(two_thousand_words)
+  total_sentences = 0
+  total_words = 0
+  word_lengths = {}
 
+  divided_words = two_thousand_words.split(/(\s|,|\.|\?|\!|\(|\{|\[|\]|\}|\))/)
+  divided_words.each_index do |i|
+    word = divided_words[i]
+
+    # it's tricky to do it exactly
+    total_sentences += 1 if word == '.' || word == '?' || word == '!'
+
+    next unless word =~ /\w+/
+
+    total_words += 1
+    # we can skip the following and get the info from word_lengths hash
+    # longest_word = word.length if word.length > longest_word
+    if word_lengths[word.length]
+      word_lengths[word.length] += 1
+    else
+      word_lengths[word.length] = 1
+    end
+  end
+  # p word_lengths
+
+  # finally return the data
+  { total_words: total_words,
+    total_sentences: total_sentences,
+    longest_word: word_lengths.keys.max,
+    average_word_length: word_averages(word_lengths, total_words),
+    words_longer_than_three_chars: word_lengths.reject { |k, _| k < 4 }
+                                               .values.reduce(:+) }
+end
+
+report = buidl_report two_thousand_words
+
+require 'json/ext'              # required for to_json method
 p report.to_json
 
 # 3 ---------------------------------------------------------------

@@ -62,9 +62,6 @@ HEREDOC
 
 # puts two_thousand_words
 
-
-# p divided_words
-
 def word_averages(hash, total_words)
   total = 0
   hash.keys.each { |k| total += k * hash[k] }
@@ -73,7 +70,6 @@ end
 
 def buidl_report(two_thousand_words)
   total_sentences = 0
-  total_words = 0
   word_lengths = {}
 
   divided_words = two_thousand_words.split(/(\s|,|\.|\?|\!|\(|\{|\[|\]|\}|\))/)
@@ -85,9 +81,6 @@ def buidl_report(two_thousand_words)
 
     next unless word =~ /\w+/
 
-    total_words += 1
-    # we can skip the following and get the info from word_lengths hash
-    # longest_word = word.length if word.length > longest_word
     if word_lengths[word.length]
       word_lengths[word.length] += 1
     else
@@ -96,7 +89,8 @@ def buidl_report(two_thousand_words)
   end
   # p word_lengths
 
-  # finally return the data
+  total_words = word_lengths.values.reduce(:+)
+
   { total_words: total_words,
     total_sentences: total_sentences,
     longest_word: word_lengths.keys.max,

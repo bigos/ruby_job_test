@@ -70,7 +70,7 @@ end
 
 def buidl_report(two_thousand_words)
   total_sentences = 0
-  word_lengths = {}
+  word_lengths = Hash.new(0)
 
   divided_words = two_thousand_words.split(/(\s|,|\.|\?|\!|\(|\{|\[|\]|\}|\))/)
   divided_words.each_index do |i|
@@ -80,12 +80,7 @@ def buidl_report(two_thousand_words)
     total_sentences += 1 if word == '.' || word == '?' || word == '!'
 
     next unless word =~ /\w+/
-
-    if word_lengths[word.length]
-      word_lengths[word.length] += 1
-    else
-      word_lengths[word.length] = 1
-    end
+    word_lengths[word.length] += 1
   end
   # p word_lengths
 
@@ -146,7 +141,7 @@ class Array
 
   def heapsort!
     # in pseudo-code, heapify only called once, so inline it here
-    ((length - 2) / 2).downto(0) {|start| siftdown(start, length - 1)}
+    ((length - 2) / 2).downto(0) { |start| siftdown(start, length - 1) }
 
     # "end" is a ruby keyword
     (length - 1).downto(1) do |end_|
@@ -200,7 +195,7 @@ puts 'question 6'
 
 def round_odd_even(n)
   # ends with .5
-  if (n).modulo(1).round(2) == 0.5
+  if n.modulo(1).round(2) == 0.5
     if n.to_i.odd?
       n.ceil
     else

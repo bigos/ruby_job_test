@@ -68,7 +68,7 @@ def word_averages(hash, total_words)
   total / total_words
 end
 
-def buidl_report(two_thousand_words)
+def buid_report(two_thousand_words)
   total_sentences = 0
   word_lengths = Hash.new(0)
 
@@ -94,9 +94,9 @@ def buidl_report(two_thousand_words)
                                                .values.reduce(:+) }
 end
 
-report = buidl_report two_thousand_words
+report = buid_report two_thousand_words
 
-require 'json/ext'              # required for to_json method
+require 'json/ext' # required for to_json method
 p report.to_json
 
 # 3 ---------------------------------------------------------------
